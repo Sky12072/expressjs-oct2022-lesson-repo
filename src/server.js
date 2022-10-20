@@ -44,7 +44,27 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 
-// Below are the routes
+require('dotenv').config(); //it loads up the env file and ready to go, without storing it into a variable. 
+
+// console.log("Firebase project ID is: " + process.env.FIREBASE_ADMIN_PROJECT_ID)
+
+//initilize firebase
+const firebaseAdmin = require('firebase-admin');
+firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert({// we need build a certificate and using a custom data, not locked in to firebase. ie. deployment database, we need to build our own certificate. 
+        "projectId": process.env.FIREBASE_ADMIN_PROJECT_ID,
+        "privateKey": process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        "clientEmail": process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+    })  
+
+});
+
+
+//------------------------------------------------
+// Config Above
+// Routes Below
+
+
 // Actual server behaviour
 app.get('/', (req, res) => { // example of req: authorisation, form data. Res is what the server send back to the front end.
     console.log('ExpressJS API homepage received a request.');
@@ -55,6 +75,14 @@ app.get('/', (req, res) => { // example of req: authorisation, form data. Res is
     });
 
 });
+
+const importedBlogRouting = require('./Blogs/BlogsRoutes');
+app.use('/blogs', importedBlogRouting);
+// localhost:55000/blogs/blaa
+
+
+const importedUserRouting = require('./Users/UserRoutes');
+app.use('/users', importedUserRouting)
 
 
 // Notice that we're not calling app.listen() anywhere in here.
