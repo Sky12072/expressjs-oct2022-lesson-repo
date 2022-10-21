@@ -66,15 +66,19 @@ const {databaseConnector} = require('./database');
 
 // if it's a not a test environment
 if (process.env.NODE_ENV != "test") {
-    const DATABASE_URI = process.env.DATABASE_URI || "mongodb://localhost:27017/ExpressLessonOctLocal" //what is 27017 coming from, and why when I changed it, it'll fail ? 27017 is the default mongoose url maybe
-    databaseConnector(DATABASE_URI).then(() => {
-        // if database connection succeeded, log a nice success message
-        console.log("Database connected, wohoo!!")
-    }).catch(error => {
-        // if database connection failed, log the error
-        console.log (`Some error occured, it was: ${error}`)
-    });
-}
+	const DATABASE_URI = process.env.DATABASE_URI || "mongodb://localhost:27017/ExpressLessonOctLocal";
+	databaseConnector(DATABASE_URI).then(() => {
+		// if database connection succeeded, log a nice success message 
+		console.log("Database connected, woohoo!");
+	}).catch(error => {
+		// if database connection failed, log the error
+		console.log(`
+		Some error occured, it was: 
+		${error}
+		`)
+	});
+} 
+//what is 27017 coming from, and why when I changed it, it'll fail ? 27017 is the default mongoose url maybe
 
 //------------------------------------------------
 // Config Above
