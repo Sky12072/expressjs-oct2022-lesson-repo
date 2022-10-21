@@ -73,7 +73,10 @@ if (process.env.NODE_ENV != "test") {
         console.log("Database connected, wohoo!!")
     }).catch(error => {
         // if database connection failed, log the error
-        console.log (`Some error occured, it was: ${error}`)
+        console.log(`
+        Some error occured, it was: 
+        ${error}
+        `)
     });
 }
 
